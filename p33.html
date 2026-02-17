@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #filterSection {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        #driverList {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .driver-card {
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+        }
+        .driver-card img {
+            max-width: 100%;
+            border-radius: 4px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .reviews {
+            margin-top: 10px;
+            text-align: left;
+        }
+        .reviews div {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div id="filterSection">
+    <label for="priceRange">Max Service Cost: ₹<span id="priceLabel">250</span></label>
+    <input type="range" id="priceRange" min="0" max="400" value="400" oninput="filterAndDisplay();">
+    <label for="sortSelect">Sort by:</label>
+    <select id="sortSelect" onchange="sortAndDisplay();">
+        <option value="none">None</option>
+        <option value="price">Service Cost (Low to High)</option>
+        <option value="priceDesc">Service Cost (High to Low)</option>
+    </select>
+</div>
+
+<div id="driverList"></div>
+
+<script>
+const drivers = [
+    { id: 1, name: "Rajesh K", price: 150, img: "images/driver1.png", reviews: ["Safe and timely rides!"] },
+    { id: 2, name: "Sunita M", price: 200, img: "images/driver2.png", reviews: ["Very friendly and professional."] },
+    { id: 3, name: "Arjun D", price: 120, img: "images/driver3.png", reviews: ["Excellent knowledge of routes!"] },
+    { id: 4, name: "Meera S", price: 180, img: "images/driver4.png", reviews: ["Always punctual and courteous."] },
+    { id: 5, name: "Vikram P", price: 160, img: "images/driver5.png", reviews: ["Great driving skills!"] }
+];
+
+// Function to display driver profiles
+function displayDrivers(drivers) {
+    const driverList = document.getElementById('driverList');
+    driverList.innerHTML = ''; // Clear existing drivers
+
+    drivers.forEach(driver => {
+        const driverCard = document.createElement('div');
+        driverCard.className = 'driver-card';
+        driverCard.innerHTML = `
+            <img src="${driver.img}" alt="${driver.name}">
+            <h3>${driver.name}</h3>
+            <p>Service Cost: ₹${driver.price.toFixed(2)}/hr</p>
+            <div class="reviews">
+                <h4>Reviews:</h4>
+                ${driver.reviews.length ? driver.reviews.map(review => `<div>${review}</div>`).join('') : 'No reviews yet.'}
+            </div>
+            <button onclick="selectDriver(${driver.id})">Select & Continue</button>
+        `;
+        driverList.appendChild(driverCard);
+    });
+}
+
+// Function to handle driver selection
+function selectDriver(driverId) {
+    const selectedDriver = drivers.find(driver => driver.id === driverId);
+    alert(`You have selected ${selectedDriver.name}. Proceeding to the next step.`);
+}
+
+// Function to filter drivers by service cost range
+function filterDrivers() {
+    const maxPrice = document.getElementById('priceRange').value;
+    const filteredDrivers = drivers.filter(driver => driver.price <= maxPrice);
+    displayDrivers(filteredDrivers);
+}
+
+// Function to sort drivers
+function sortDrivers() {
+    const sortOption = document.getElementById('sortSelect').value;
+    let sortedDrivers = [...drivers];
+
+    if (sortOption === 'price') {
+        sortedDrivers.sort((a, b) => a.price - b.price);
+    } else if (sortOption === 'priceDesc') {
+        sortedDrivers.sort((a, b) => b.price - a.price);
+    }
+
+    displayDrivers(sortedDrivers);
+}
+
+// Combine filter and sort
+function filterAndDisplay() {
+    const maxPrice = document.getElementById('priceRange').value;
+    const filteredDrivers = drivers.filter(driver => driver.price <= maxPrice);
+    sortDrivers(filteredDrivers); // This will call sort function on filtered results
+}
+
+// Initial display of all drivers
+displayDrivers(drivers);
+</script>
+
+</body>
+</html>

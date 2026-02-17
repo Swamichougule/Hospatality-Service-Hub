@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decorator List</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Playwrite+CU:wght@100..400&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .table {
+            background-color: #333;
+            border: 1px solid #444;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .table thead th {
+            border-bottom: 2px solid #444;
+        }
+        .table td, .table th {
+            vertical-align: middle;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        .filter-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #fff;
+        }
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; 
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .modal-content {
+            background-color: #333;
+            margin: 15% auto; 
+            padding: 20px;
+            border: 1px solid #444;
+            border-radius: 10px;
+            width: 80%; 
+            max-width: 600px; 
+            color: white;
+        }
+        .close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: #aaa;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Custom styles for navbar */
+        .navbar {
+            background-color: #1b1b1b; /* Navbar background color */
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block; /* Show dropdown on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/myproject/index.php">Hospitality & Services Hub<br>-A Network for Reliable Help-</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" aria-expanded="false">
+                            Services
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/myproject/bookdecorator/index.html" class="dropdown-item">Decorator</a></li>
+                            <li><a href="/myproject/bookcook/index.html" class="dropdown-item">Cook</a></li>
+                            <li><a href="/myproject/bookbabysitter/babysitter.html" class="dropdown-item">Babysitter</a></li>
+                            <li><a href="/myproject/bookdriver/index.html" class="dropdown-item">Driver</a></li>
+                            <li><a href="/myproject/bookelectrician/index.html" class="dropdown-item">Electrician</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="text-center">Decorator Taskers</h1>
+        
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <label for="locationFilter" class="form-label">Filter by Location:</label>
+            <select id="locationFilter" class="form-select d-inline w-auto">
+                <option value="all">All Locations</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Pune">Pune</option>
+                <option value="Delhi">Delhi</option>
+            </select>
+            <button class="btn btn-primary ms-3" onclick="filterByLocation()">Apply Filter</button>
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Profile</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Location</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="taskerTable">
+                <tr data-location="Mumbai">
+                    <td><img src="images/decorator1.jpg" alt="Decorator 1" class="rounded-circle" width="80" height="80"></td>
+                    <td>Anita S</td>
+                    <td>₹70.00/hr</td>
+                    <td>Mumbai</td>
+                    <td>
+                        <form action="book.php" method="POST">
+                            <input type="hidden" name="tasker_name" value="Anita S">
+                            <input type="hidden" name="price" value="70.00">
+                            <button type="submit" class="btn btn-success">Select & Continue</button>
+                        </form>                        
+                        <button class="btn btn-info" onclick="openModal('Anita S')">View Reviews</button>
+                    </td>
+                </tr>
+                <tr data-location="Pune">
+                    <td><img src="images/decorator2.jpg" alt="Decorator 2" class="rounded-circle" width="80" height="80"></td>
+                    <td>Ravi K</td>
+                    <td>₹80.00/hr</td>
+                    <td>Pune</td>
+                    <td>
+                        <form action="book.php" method="POST" onsubmit="return checkLogin();">
+                            <input type="hidden" name="tasker_name" value="Ravi K">
+                            <input type="hidden" name="price" value="80.00">
+                            <button type="submit" class="btn btn-success">Select & Continue</button>
+                        </form>
+                        <button class="btn btn-info" onclick="openModal('Ravi K')">View Reviews</button>
+                    </td>
+                </tr>
+                <tr data-location="Delhi">
+                    <td><img src="images/decorator3.png" alt="Decorator 3" class="rounded-circle" width="80" height="80"></td>
+                    <td>Simran T</td>
+                    <td>₹85.00/hr</td>
+                    <td>Delhi</td>
+                    <td>
+                        <form action="book.php" method="POST" onsubmit="return checkLogin();">
+                            <input type="hidden" name="tasker_name" value="Simran T">
+                            <input type="hidden" name="price" value="85.00">
+                            <button type="submit" class="btn btn-success">Select & Continue</button>
+                        </form>
+                        <button class="btn btn-info" onclick="openModal('Simran T')">View Reviews</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="reviewModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Reviews for <span id="taskerName"></span></h2>
+            <p>⭐⭐⭐⭐⭐ - Excellent decorating skills!</p>
+            <p>⭐⭐⭐⭐ - Very professional and creative.</p>
+            <p>⭐⭐⭐⭐⭐ - Highly recommended!</p>
+        </div>
+    </div>
+
+    <script>
+        function openModal(tasker) {
+            document.getElementById('taskerName').innerText = tasker;
+            document.getElementById('reviewModal').style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('reviewModal').style.display = "none";
+        }
+
+        function filterByLocation() {
+            const filter = document.getElementById('locationFilter').value.toLowerCase();
+            const rows = document.querySelectorAll('#taskerTable tr');
+            rows.forEach(row => {
+                const location = row.getAttribute('data-location').toLowerCase();
+                if (filter === 'all' || location === filter) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function checkLogin() {
+            // Placeholder for login check logic
+            return true; // Allow form submission for now
+        }
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

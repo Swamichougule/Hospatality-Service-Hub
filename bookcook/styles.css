@@ -1,0 +1,132 @@
+/* General Reset and Body Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Reset and Base Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #141617; /* Black background */
+    color: #fff;
+}
+
+/* Header and Navigation Styling */
+header {
+    width: 100%;
+    padding: 20px;
+    background-color: #111;
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.hero {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.hero h1 {
+    font-size: 32px;
+    color: #76c25b; /* Green color */
+    margin-bottom: 10px;
+}
+
+.search-bar {
+    margin-top: 15px;
+}
+
+.search-bar input {
+    padding: 10px;
+    width: 300px;
+    border: none;
+    border-radius: 5px;
+}
+
+.search-bar button {
+    padding: 10px;
+    background-color: #76c25b;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filter-container {
+    margin: 20px;
+    text-align: center;
+}
+
+.cook-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Cook Card Styling */
+.cook-card {
+    background-color: #222;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cook-card img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.cook-card h3 {
+    color: #fff;
+    margin-top: 10px;
+}
+
+.cook-card p {
+    color: #bbb;
+}
+
+.cook-card button {
+    background-color: #76c25b;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cook-card button:hover {
+    background-color: #5ca044;
+}
