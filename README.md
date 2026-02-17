@@ -1,1 +1,2 @@
 # Hospatality-Service-Hub
+The project “Hospitality & Service Hub” is a web-based platform that connects customers with trusted household service providers like maids, chefs, and babysitters. It allows users to easily register, book services, make payments, and give feedback, while admins manage and verify service providers. The system makes finding reliable help faster, safer, and more convenient. Overall, it improves service booking and communication between customers and providers.
